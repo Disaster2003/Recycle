@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -31,4 +32,14 @@ public class GameManager : MonoBehaviour
     /// インスタンスを取得する
     /// </summary>
     public static GameManager GetInstance() { return instance; }
+
+    /// <summary>
+    /// クリック処理
+    /// </summary>
+    public void OnClick()
+    {
+        // シーン遷移
+        int buildIndex = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadSceneAsync(buildIndex + 1);
+    }
 }
