@@ -6,13 +6,14 @@ using System.IO;
 public class MoveCharacter : MonoBehaviour
 {
     // ê›íËÇ∑ÇÈà íu
-    private struct Position
+    private struct POSITION
     {
         public Vector2 initialize,
             midpoint,
-            goal;
+            goal_self,
+            goal_mom;
     }
-    Position position;
+    POSITION position;
 
     private float time_tmp,
         time_wait,
@@ -36,6 +37,8 @@ public class MoveCharacter : MonoBehaviour
 
     bool isEntered = false;
 
+    [SerializeField] GameObject mom;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -49,18 +52,22 @@ public class MoveCharacter : MonoBehaviour
         }
 
         int jobIndex = (int)job;
+        int jobIndex_mom = (int)JOB.MOM;
         float initialize_x = float.Parse(csvData[jobIndex][1]);
         float initialize_y = float.Parse(csvData[jobIndex][2]);
         float midpoint_x = float.Parse(csvData[jobIndex][3]);
         float midpoint_y = float.Parse(csvData[jobIndex][4]);
-        float goal_x = float.Parse(csvData[jobIndex][5]);
-        float goal_y = float.Parse(csvData[jobIndex][6]);
+        float goal_self_x = float.Parse(csvData[jobIndex][5]);
+        float goal_self_y = float.Parse(csvData[jobIndex][6]);
+        float goal_mom_x = float.Parse(csvData[jobIndex_mom][5]);
+        float goal_mom_y = float.Parse(csvData[jobIndex_mom][6]);
         SPEED_MOVE = float.Parse(csvData[jobIndex][7]);
         time_wait = float.Parse(csvData[jobIndex][8]);
 
         position.initialize = new Vector2(initialize_x, initialize_y);
         position.midpoint = new Vector2(midpoint_x, midpoint_y);
-        position.goal = new Vector2(goal_x, goal_y);
+        position.goal_self = new Vector2(goal_self_x, goal_self_y);
+        position.goal_mom = new Vector2(goal_mom_x, goal_mom_y);
         // à íuÇÃèâä˙âª
         transform.localPosition = position.initialize;
     }
@@ -89,16 +96,19 @@ public class MoveCharacter : MonoBehaviour
                     }
                     break;
                 case ARRIVED_POSITION.MIDPOINT:
-                    tmp = (Time.time - time_tmp) * SPEED_MOVE / Vector2.Distance(position.midpoint, position.goal);
-                    transform.localPosition = Vector2.Lerp(position.midpoint, position.goal, tmp);
+                    tmp = (Time.time - time_tmp) * SPEED_MOVE / Vector2.Distance(position.midpoint, position.goal_self);
+                    transform.localPosition = Vector2.Lerp(position.midpoint, position.goal_self, tmp);
 
-                    if (transform.localPosition.x == position.goal.x)
+                    if (transform.localPosition.x == position.goal_self.x)
                         arrived_position = ARRIVED_POSITION.GOAL;
                     break;
                 case ARRIVED_POSITION.GOAL:
-                    tmp = Mathf.PingPong(Time.time * SPEED_MOVE * 0.25f, 40 - -40) + -40;
-                    transform.localRotation =
-                        Quaternion.Euler(0, GetComponent<RectTransform>().eulerAngles.y, tmp);
+                    if (mom.GetComponent<MoveCharacter>().transform.localPosition.x == position.goal_mom.x)
+                    {
+                        tmp = Mathf.PingPong(Time.time * SPEED_MOVE * 0.25f, 40 - -40) + -40;
+                        transform.localRotation =
+                            Quaternion.Euler(0, GetComponent<RectTransform>().eulerAngles.y, tmp);
+                    }
                     break;
             }
         }
