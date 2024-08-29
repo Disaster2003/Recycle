@@ -8,34 +8,32 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// シーンの状態
     /// </summary>
-    enum SCENE_STATE
+    private enum SCENE_STATE
     {
         TITLE = 0,
         PLAY = 1,
         RESULT,
     }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    private SCENE_STATE scene_state = SCENE_STATE.TITLE;
 
     // Update is called once per frame
     void Update()
     {
-        
-    }
-
-    /// <summary>
-    /// クリックで次のシーンへ
-    /// </summary>
-    public void OnClickNextScene()
-    {
         int buildIndex = SceneManager.GetActiveScene().buildIndex;
-        if(buildIndex == (int)SCENE_STATE.RESULT)
-            SceneManager.LoadSceneAsync((int)SCENE_STATE.TITLE);
-        else
-            SceneManager.LoadSceneAsync(buildIndex);
+        switch (scene_state)
+        {
+            case SCENE_STATE.TITLE:
+                // プレイ画面へ
+                if(Input.GetKeyDown(KeyCode.Return))
+                    SceneManager.LoadSceneAsync(buildIndex + 1);
+                break;
+            case SCENE_STATE.PLAY:
+                break;
+            case SCENE_STATE.RESULT:
+                // タイトル画面へ
+                if (Input.GetKeyDown(KeyCode.Return))
+                    SceneManager.LoadSceneAsync((int)SCENE_STATE.TITLE);
+                break;
+        }
     }
 }
