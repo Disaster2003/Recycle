@@ -19,6 +19,8 @@ public class GameManager : MonoBehaviour
 
     public static bool isCleared = false;
 
+    [SerializeField] AudioClip buttonDown;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -35,19 +37,29 @@ public class GameManager : MonoBehaviour
             case SCENE_STATE.TITLE:
                 // 説明画面へ
                 if (Input.GetKeyDown(KeyCode.Return))
+                {
+                    GetComponent<AudioSource>().PlayOneShot(buttonDown);
                     SceneManager.LoadSceneAsync(buildIndex + 1);
+                }
                 break;
             case SCENE_STATE.EXPLAIN:
                 // プレイ画面へ
                 if (Input.GetKeyDown(KeyCode.Return))
+                {
+                    isCleared = false;
+                    GetComponent<AudioSource>().PlayOneShot(buttonDown);
                     SceneManager.LoadSceneAsync(buildIndex + 1);
+                }
                 break;
             case SCENE_STATE.PLAY:
                 break;
             case SCENE_STATE.RESULT:
                 // タイトル画面へ
                 if (Input.GetKeyDown(KeyCode.Return))
+                {
+                    GetComponent<AudioSource>().PlayOneShot(buttonDown);
                     SceneManager.LoadSceneAsync((int)SCENE_STATE.TITLE);
+                }
                 break;
         }
     }
