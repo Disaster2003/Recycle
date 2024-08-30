@@ -11,20 +11,33 @@ public class GameManager : MonoBehaviour
     private enum SCENE_STATE
     {
         TITLE = 0,
-        PLAY = 1,
-        RESULT,
+        EXPLAIN = 1,
+        PLAY = 2,
+        RESULT = 3,
     }
     private SCENE_STATE scene_state = SCENE_STATE.TITLE;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        DontDestroyOnLoad(this);
+    }
 
     // Update is called once per frame
     void Update()
     {
         int buildIndex = SceneManager.GetActiveScene().buildIndex;
+        scene_state = (SCENE_STATE)buildIndex;
         switch (scene_state)
         {
             case SCENE_STATE.TITLE:
+                // ê‡ñæâÊñ Ç÷
+                if (Input.GetKeyDown(KeyCode.Return))
+                    SceneManager.LoadSceneAsync(buildIndex + 1);
+                break;
+            case SCENE_STATE.EXPLAIN:
                 // ÉvÉåÉCâÊñ Ç÷
-                if(Input.GetKeyDown(KeyCode.Return))
+                if (Input.GetKeyDown(KeyCode.Return))
                     SceneManager.LoadSceneAsync(buildIndex + 1);
                 break;
             case SCENE_STATE.PLAY:
