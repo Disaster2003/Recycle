@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour
     }
     private SCENE_STATE scene_state = SCENE_STATE.TITLE;
 
+    public static bool isCleared = false;
+
     // Start is called before the first frame update
     void Start()
     {

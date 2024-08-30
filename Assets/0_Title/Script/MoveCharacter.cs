@@ -42,6 +42,7 @@ public class MoveCharacter : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // CSVの読み込み
         TextAsset csvFile = Resources.Load("TitleData") as TextAsset; // ResourcesにあるCSVファイルを格納
         StringReader reader = new StringReader(csvFile.text); // TextAssetをStringReaderに変換
         List<string[]> csvData = new List<string[]>(); // CSVファイルの中身を入れるリスト
@@ -51,6 +52,7 @@ public class MoveCharacter : MonoBehaviour
             csvData.Add(line.Split(',')); // csvDataリストに追加する
         }
 
+        // データの代入
         int jobIndex = (int)job;
         int jobIndex_mom = (int)JOB.MOM;
         float initialize_x = float.Parse(csvData[jobIndex][1]);
@@ -68,6 +70,7 @@ public class MoveCharacter : MonoBehaviour
         position.midpoint = new Vector2(midpoint_x, midpoint_y);
         position.goal_self = new Vector2(goal_self_x, goal_self_y);
         position.goal_mom = new Vector2(goal_mom_x, goal_mom_y);
+
         // 位置の初期化
         transform.position = position.initialize;
     }
@@ -77,6 +80,7 @@ public class MoveCharacter : MonoBehaviour
     {
         if (time_wait <= 0)
         {
+
             if (!isEntered)
             {
                 isEntered = true;
@@ -92,7 +96,7 @@ public class MoveCharacter : MonoBehaviour
                     if (transform.position.x == position.midpoint.x)
                     {
                         arrived_position = ARRIVED_POSITION.MIDPOINT;
-                        time_tmp = Time.time;
+                        isEntered = false;
                     }
                     break;
                 case ARRIVED_POSITION.MIDPOINT:
@@ -112,6 +116,7 @@ public class MoveCharacter : MonoBehaviour
                     break;
             }
         }
+        // 待ち時間計測
         else
             time_wait -= Time.deltaTime;
     }
