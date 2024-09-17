@@ -21,6 +21,7 @@ public class MoveCharacter : MonoBehaviour
 
     private enum JOB
     {
+        NONE = 0,
         BOY = 1,
         GIRL = 2,
         MOM = 3,
@@ -43,7 +44,7 @@ public class MoveCharacter : MonoBehaviour
     void Start()
     {
         // nullチェック
-        if (job == 0)
+        if (job == JOB.NONE)
         {
             Debug.Log("役割が未設定です");
             return;
