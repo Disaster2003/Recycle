@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class Trash : MonoBehaviour
 {
@@ -21,14 +20,30 @@ public class Trash : MonoBehaviour
     {
         // 端で自身を破壊
         if (transform.position.x <= -10)
+        {
             Destroy(gameObject);
+        }
         // 左に進む
         else
+        {
             transform.position += new Vector3(-Time.deltaTime * 5, 0, 0);
+        }
     }
 
     private void OnMouseOver()
     {
+        // nullチェック
+        if(imgDestroyTrash == null)
+        {
+            Debug.Log("ゴミ箱の画像が存在しません");
+            return;
+        }
+        if(trashbox == null)
+        {
+            Debug.Log("ゴミを捨てる音が存在しません");
+            return;
+        }
+
         // Recycleして、自身を破壊
         if (Input.GetKeyDown(keyCode))
         {

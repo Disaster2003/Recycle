@@ -10,6 +10,7 @@ public class Spawn : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // 定期的(第三引数の値s)に関数を実行
         // 止める場合は、CancelInvoke()
         InvokeRepeating(nameof(SpawnTrash), 0, 1);
     }
@@ -33,6 +34,7 @@ public class Spawn : MonoBehaviour
     /// </summary>
     private void SpawnTrash()
     {
+        // ゴミの生成
         Instantiate(trash[Random.Range(0, trash.Length)]);
     }
 }

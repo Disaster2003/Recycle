@@ -40,6 +40,7 @@ public class GameManager : MonoBehaviour
                 {
                     GetComponent<AudioSource>().PlayOneShot(buttonDown);
                     SceneManager.LoadSceneAsync(buildIndex + 1);
+                    return;
                 }
                 break;
             case SCENE_STATE.EXPLAIN:
@@ -49,6 +50,7 @@ public class GameManager : MonoBehaviour
                     isCleared = false;
                     GetComponent<AudioSource>().PlayOneShot(buttonDown);
                     SceneManager.LoadSceneAsync(buildIndex + 1);
+                    return;
                 }
                 break;
             case SCENE_STATE.PLAY:
@@ -59,6 +61,7 @@ public class GameManager : MonoBehaviour
                 {
                     GetComponent<AudioSource>().PlayOneShot(buttonDown);
                     SceneManager.LoadSceneAsync((int)SCENE_STATE.TITLE);
+                    return;
                 }
                 break;
         }

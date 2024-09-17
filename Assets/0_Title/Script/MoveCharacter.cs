@@ -78,9 +78,16 @@ public class MoveCharacter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // nullチェック
+        if (!mom)
+        {
+            Debug.Log("ママのオブジェクトが存在しません");
+            return;
+        }
+
         if (time_wait <= 0)
         {
-
+            // 現在の経過時間を記録
             if (!isEntered)
             {
                 isEntered = true;
@@ -90,9 +97,11 @@ public class MoveCharacter : MonoBehaviour
             switch (arrived_position)
             {
                 case ARRIVED_POSITION.INITIALIZE:
+                    // 左へ移動
                     float tmp = (Time.time - time_tmp) * SPEED_MOVE / Vector2.Distance(position.initialize, position.midpoint);
                     transform.position = Vector2.Lerp(position.initialize, position.midpoint, tmp);
 
+                    // 中間地点に到着
                     if (transform.position.x == position.midpoint.x)
                     {
                         arrived_position = ARRIVED_POSITION.MIDPOINT;
@@ -100,13 +109,18 @@ public class MoveCharacter : MonoBehaviour
                     }
                     break;
                 case ARRIVED_POSITION.MIDPOINT:
+                    // 右へ移動
                     tmp = (Time.time - time_tmp) * SPEED_MOVE / Vector2.Distance(position.midpoint, position.goal_self);
                     transform.position = Vector2.Lerp(position.midpoint, position.goal_self, tmp);
 
+                    // 目標地点に到着
                     if (transform.position.x == position.goal_self.x)
+                    {
                         arrived_position = ARRIVED_POSITION.GOAL;
+                    }
                     break;
                 case ARRIVED_POSITION.GOAL:
+                    // 揺れ動かす
                     if (mom.GetComponent<MoveCharacter>().transform.position.x == position.goal_mom.x)
                     {
                         tmp = Mathf.PingPong(Time.time * SPEED_MOVE * 20, 40 - -40) + -40;
@@ -118,6 +132,8 @@ public class MoveCharacter : MonoBehaviour
         }
         // 待ち時間計測
         else
+        {
             time_wait -= Time.deltaTime;
+        }
     }
 }

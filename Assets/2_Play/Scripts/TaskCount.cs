@@ -18,6 +18,7 @@ public class TaskCount : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Œ‹‰Ê‰æ–Ê‚Ö
         if (countTask >= 20)
         {
             GameManager.isCleared = true;

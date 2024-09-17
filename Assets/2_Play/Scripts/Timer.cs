@@ -19,10 +19,13 @@ public class Timer : MonoBehaviour
     void Update()
     {
         // ゲームオーバー
-        if(timer <= 0)
+        if (timer <= 0)
+        {
             SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex + 1);
-        timer -= Time.deltaTime;
+        }
 
+        // カウントダウン
+        timer -= Time.deltaTime;
         GetComponent<Text>().text = timer.ToString("f1") + "s";
     }
 }

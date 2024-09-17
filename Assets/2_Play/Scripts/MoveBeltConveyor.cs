@@ -17,8 +17,11 @@ public class MoveBeltConveyor : MonoBehaviour
     {
         // ‰ŠúˆÊ’u‚É–ß‚·
         if (transform.position.x <= -21)
+        {
             transform.position = positionInitialize;
+        }
 
+        // ¶‚ÖˆÚ“®
         transform.position += new Vector3(-Time.deltaTime * 5, 0, 0);
     }
 }
