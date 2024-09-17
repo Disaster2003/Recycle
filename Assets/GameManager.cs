@@ -30,6 +30,12 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(buttonDown == null)
+        {
+            Debug.Log("ƒ{ƒ^ƒ“‚Ì‰Ÿ‰º‰¹‚ª–¢İ’è‚Å‚·");
+            return;
+        }
+
         int buildIndex = SceneManager.GetActiveScene().buildIndex;
         scene_state = (SCENE_STATE)buildIndex;
         switch (scene_state)

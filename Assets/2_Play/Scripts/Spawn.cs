@@ -10,6 +10,13 @@ public class Spawn : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // nullチェック
+        if (trash == null)
+        {
+            Debug.Log("ゴミのオブジェクトが未設定です");
+            return;
+        }
+
         // 定期的(第三引数の値s)に関数を実行
         // 止める場合は、CancelInvoke()
         InvokeRepeating(nameof(SpawnTrash), 0, 1);

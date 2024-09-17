@@ -42,6 +42,13 @@ public class MoveCharacter : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // nullチェック
+        if (job == 0)
+        {
+            Debug.Log("役割が未設定です");
+            return;
+        }
+
         // CSVの読み込み
         TextAsset csvFile = Resources.Load("TitleData") as TextAsset; // ResourcesにあるCSVファイルを格納
         StringReader reader = new StringReader(csvFile.text); // TextAssetをStringReaderに変換
@@ -81,7 +88,7 @@ public class MoveCharacter : MonoBehaviour
         // nullチェック
         if (!mom)
         {
-            Debug.Log("ママのオブジェクトが存在しません");
+            Debug.Log("ママのオブジェクトが未設定です");
             return;
         }
 

@@ -35,12 +35,17 @@ public class Trash : MonoBehaviour
         // nullチェック
         if(imgDestroyTrash == null)
         {
-            Debug.Log("ゴミ箱の画像が存在しません");
+            Debug.Log("ゴミ箱の画像が未設定です");
+            return;
+        }
+        if(keyCode == KeyCode.None)
+        {
+            Debug.Log("キーの振り分けが未完了です");
             return;
         }
         if(trashbox == null)
         {
-            Debug.Log("ゴミを捨てる音が存在しません");
+            Debug.Log("ゴミを捨てる音が未設定です");
             return;
         }
 
